@@ -16,10 +16,10 @@ commit:
 
 stage-6.$(EXT): stage-6/.sentinel
 	cd $(shell dirname $<) && \
-	tar acvf ../$@ # --owner=0 --group=0 .
+	tar acvf ../$@ . # --owner=0 --group=0 .
 stage-7.$(EXT): stage-7/.sentinel
 	cd $(shell dirname $<) && \
-	tar acvf ../$@ # --owner=0 --group=0 .
+	tar acvf ../$@ . # --owner=0 --group=0 .
 
 stage-6/.sentinel: $(shell find stage-6 -type f)
 	openssl rand -out $@ $(shell echo '2 ^ 10' | bc )
