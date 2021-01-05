@@ -1,0 +1,21 @@
+#! /usr/bin/env -S tail -n +2
+bash
+binutils
+bison
+coreutils
+diffutils
+findutils
+gawk
+gcc
+g++
+grep
+m4
+make
+patch
+perl
+python3
+sed
+tar
+texinfo
+wget
+

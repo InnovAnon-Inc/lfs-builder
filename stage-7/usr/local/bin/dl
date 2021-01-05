@@ -1,0 +1,34 @@
+#! /bin/bash
+set -euxo pipefail
+(( $#  ))
+(( UID ))
+
+cd "$LFS/sources"
+[[ -f wget-list ]]
+[[ -f md5sums   ]]
+
+REX=()
+for k in $@ ; do
+  REX=(${REX[@]} "/$k\$")
+done
+
+for k in ${REX[@]} ; do
+  grep -q "$k" wget-list || {
+    echo "$k"
+    exit 2
+  }
+done
+
+URL=()
+for k in ${REX[@]} ; do
+  URL=(${URL[@]} $(grep "$k" wget-list))
+done
+tsocks wget -nc ${URL[@]}
+  
+for k in $@ ; do
+  awk '$2 == "'"$k"'"' md5sums |
+  md5sum -c -
+done
+
+exec tar xf "$1"
+
