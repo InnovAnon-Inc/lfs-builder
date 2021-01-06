@@ -78,3 +78,10 @@ COPY --from=support --chown=root /usr/local/bin/dl /usr/local/bin/dl
 ##           /var/tmp/*
 ## TODO clean script; rm clean script here
 
+#FROM final as test
+#USER lfs
+#RUN sleep 31 \
+# && tsocks wget -O- https://3g2upl4pq6kufc4m.onion
+
+#FROM final
+
