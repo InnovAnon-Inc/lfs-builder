@@ -23,7 +23,10 @@ URL=()
 for k in ${REX[@]} ; do
   URL=(${URL[@]} $(grep "$k" wget-list))
 done
-tsocks wget -nc ${URL[@]}
+# TODO
+#tsocks wget -nc ${URL[@]}
+#TSOCKS_PASSWORD=abc123 tsocks wget -nc ${URL[@]}
+wget -nc ${URL[@]}
   
 for k in $@ ; do
   awk '$2 == "'"$k"'"' md5sums |
