@@ -9,10 +9,11 @@ cd "$LFS/sources"
 
 REX=()
 for k in "$@" ; do
+  [[ -e "$k" ]] ||
   REX=("${REX[@]}" "/$k\$")
 done
 unset k
-(( ${#REX[@]} = $# ))
+#(( ${#REX[@]} = $# ))
 
 for k in "${REX[@]}" ; do
   grep -q "$k" wget-list || {
@@ -28,13 +29,16 @@ for k in "${REX[@]}" ; do
   URL=("${URL[@]}" "$T")
 done
 unset k
-(( ${#URL[@]} = $# ))
+#(( ${#URL[@]} = $# ))
+(( ${#URL[@]} = ${#REX[@]} ))
 
 # TODO
 #tsocks wget -nc ${URL[@]}
 #TSOCKS_PASSWORD=abc123 tsocks wget -nc ${URL[@]}
-wget -nc "${URL[@]}"
-  
+#wget -nc "${URL[@]}"
+(( ! ${#URL[@]} )) ||
+curl "--proxy=$SOCKS_PROXY" "${URL[@]}"
+ 
 for k in "$@" ; do
   awk '$2 == "'"$k"'"' md5sums |
   md5sum -c -
