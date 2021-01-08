@@ -13,7 +13,7 @@ for k in "$@" ; do
   REX=("${REX[@]}" "/$k\$")
 done
 unset k
-#(( ${#REX[@]} = $# ))
+#(( ${#REX[@]} == $# ))
 
 for k in "${REX[@]}" ; do
   grep -q "$k" wget-list || {
@@ -29,8 +29,8 @@ for k in "${REX[@]}" ; do
   URL=("${URL[@]}" "$T")
 done
 unset k
-#(( ${#URL[@]} = $# ))
-(( ${#URL[@]} = ${#REX[@]} ))
+#(( ${#URL[@]} == $# ))
+(( ${#URL[@]} == ${#REX[@]} ))
 
 # TODO
 #tsocks wget -nc ${URL[@]}
