@@ -2,11 +2,13 @@ FROM innovanon/bare as builder
 ARG EXT=tgz
 ARG TEST=
 #ARG LFS=/mnt/lfs
-COPY          ./stage-6.$EXT    /tmp/
+#COPY          ./stage-6.$EXT    /tmp/
+COPY          ./stage-6         /tmp/stage-6
 RUN sleep 31                                             \
- && tar xf /tmp/stage-6.$EXT -C /                        \
- && rm    -v                    /tmp/stage-6.$EXT        \
-                                /.sentinel               \
+ && ( cd                        /tmp/stage-6             \
+ &&   tar cf - .                                       ) \
+  | tar xf - -C /                                        \
+ && rm -rf                      /tmp/stage-6             \
  && chmod -v 1777               /tmp                     \
  && apt update                                           \
  && [ -x           /tmp/dpkg.list ]                      \
@@ -26,10 +28,12 @@ RUN sleep 31                                             \
 FROM builder as support
 ARG EXT=tgz
 ARG TEST=
-COPY          ./stage-7.$EXT    /tmp/
-RUN tar xf /tmp/stage-7.$EXT -C /                  \
- && rm    -v                    /tmp/stage-7.$EXT  \
-                                /.sentinel         \
+#COPY          ./stage-7.$EXT    /tmp/
+COPY          ./stage-7         /tmp/stage-7
+RUN ( cd                        /tmp/stage-7       \
+ &&   tar cf - .                                )  \
+  | tar xf - -C /                                  \
+ && rm -rf                      /tmp/stage-7       \
  && chmod -v 1777               /tmp               \
  && apt update                                     \
  && [ -x            /tmp/dpkg.list ]               \
