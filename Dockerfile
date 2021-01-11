@@ -22,7 +22,8 @@ RUN sleep 31                                             \
            /var/lib/apt/lists/*                          \
            /var/log/apt/term.log                         \
            /var/log/dpkg.log                             \
-           /var/tmp/*
+           /var/tmp/*                                    \
+ && exec true || exec false
 
 # TODO take this out until shc -S is an option
 FROM builder as support
@@ -52,7 +53,8 @@ RUN ( cd                        /tmp/stage-7       \
            /var/lib/apt/lists/*                    \
            /var/log/apt/term.log                   \
            /var/log/dpkg.log                       \
-           /var/tmp/*
+           /var/tmp/*                              \
+ && exec true || exec false
  #&& rm    -v     dl{,.x.c}                         \
 
 FROM builder as final
