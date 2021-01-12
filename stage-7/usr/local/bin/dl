@@ -40,7 +40,7 @@ unset k
 #curl --proxy "$SOCKS_PROXY" "${URL[@]}"
 for url in "${URL[@]}" ; do
   f="$(basename "$URL")"
-  curl --proxy="$SOCKS_PROXY" -o "$f" "$url"
+  curl --proxy "$SOCKS_PROXY" -o "$f" "$url"
 done
  
 for k in "$@" ; do
