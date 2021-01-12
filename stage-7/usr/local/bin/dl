@@ -9,6 +9,7 @@ cd "$LFS/sources"
 
 REX=()
 for k in "$@" ; do
+  [[ -n "$k" ]]
   [[ -e "$k" ]] ||
   REX=("${REX[@]}" "/$k\$")
 done
@@ -16,6 +17,7 @@ unset k
 #(( ${#REX[@]} == $# ))
 
 for k in "${REX[@]}" ; do
+  [[ -n "$k" ]]
   grep -q "$k" wget-list || {
     echo "$k"
     exit 2
@@ -25,10 +27,12 @@ unset k
 
 URL=()
 for k in "${REX[@]}" ; do
+  [[ -n "$k" ]]
   T="$(grep "$k" wget-list)"
+  [[ -n "$T" ]]
   URL=("${URL[@]}" "$T")
 done
-unset k
+unset k T
 #(( ${#URL[@]} == $# ))
 (( ${#URL[@]} == ${#REX[@]} ))
 
@@ -39,9 +43,12 @@ unset k
 #(( ! ${#URL[@]} )) ||
 #curl --proxy "$SOCKS_PROXY" "${URL[@]}"
 for url in "${URL[@]}" ; do
+  [[ -n "$url" ]]
   f="$(basename "$URL")"
+  [[ -n "$f" ]]
   curl --proxy "$SOCKS_PROXY" -o "$f" "$url"
 done
+unset f url
  
 for k in "$@" ; do
   awk '$2 == "'"$k"'"' md5sums |
