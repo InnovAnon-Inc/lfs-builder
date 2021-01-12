@@ -46,13 +46,15 @@ for url in "${URL[@]}" ; do
   [[ -n "$url" ]]
   f="$(basename "$URL")"
   [[ -n "$f" ]]
-  curl --proxy "$SOCKS_PROXY" -o "$f" "$url"
+  curl -L --proxy "$SOCKS_PROXY" -o "$f" "$url"
 done
 unset f url
  
 for k in "$@" ; do
   awk '$2 == "'"$k"'"' md5sums |
-  md5sum -c -
+  md5sum -c - || {
+    echo "$k" ;
+    exit 2    ;  }
 done
 unset k
 
