@@ -14,15 +14,7 @@ RUN sleep 31                                             \
  && [ -x           /tmp/dpkg.list ]                      \
  && apt install  $(/tmp/dpkg.list)                       \
  && rm -v          /tmp/dpkg.list                        \
- && apt autoremove                                       \
- && apt clean                                            \
- && rm -rf /tmp/*                                        \
-           /var/log/alternatives.log                     \
-           /var/log/apt/history.log                      \
-           /var/lib/apt/lists/*                          \
-           /var/log/apt/term.log                         \
-           /var/log/dpkg.log                             \
-           /var/tmp/*                                    \
+ && clean.sh                                       \
  && exec true || exec false
 
 # TODO take this out until shc -S is an option
@@ -45,15 +37,7 @@ RUN ( cd                        /tmp/stage-7       \
  && chmod -v 0555 dl.x                             \
  && apt-mark auto $(/tmp/dpkg.list)                \
  && rm -v           /tmp/dpkg.list                 \
- && apt autoremove                                 \
- && apt clean                                      \
- && rm -rf /tmp/*                                  \
-           /var/log/alternatives.log               \
-           /var/log/apt/history.log                \
-           /var/lib/apt/lists/*                    \
-           /var/log/apt/term.log                   \
-           /var/log/dpkg.log                       \
-           /var/tmp/*                              \
+ && clean.sh                                       \
  && exec true || exec false
  #&& rm    -v     dl{,.x.c}                         \
 

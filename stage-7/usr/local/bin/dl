@@ -36,8 +36,12 @@ unset k
 #tsocks wget -nc ${URL[@]}
 #TSOCKS_PASSWORD=abc123 tsocks wget -nc ${URL[@]}
 #wget -nc "${URL[@]}"
-(( ! ${#URL[@]} )) ||
-curl --proxy "$SOCKS_PROXY" "${URL[@]}"
+#(( ! ${#URL[@]} )) ||
+#curl --proxy "$SOCKS_PROXY" "${URL[@]}"
+for url in "${URL[@]}" ; do
+  f="$(basename "$URL")"
+  curl --proxy="$SOCKS_PROXY" -o "$f" "$url"
+done
  
 for k in "$@" ; do
   awk '$2 == "'"$k"'"' md5sums |
