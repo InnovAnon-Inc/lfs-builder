@@ -72,7 +72,7 @@ jobs:
               curl --location --request POST \
                 'https://circleci.com/api/v2/project/github/InnovAnon-Inc/pusher/pipeline' \
                 --header 'Content-Type: application/json' \
-                -u "${API_KEY}:"
+                -u "${API_TOKEN}:"
             fi
       - run:
           name: Push upstream (logo-builder)
@@ -81,7 +81,7 @@ jobs:
               curl --location --request POST \
                 'https://circleci.com/api/v2/project/github/InnovAnon-Inc/logo-builder/pipeline' \
                 --header 'Content-Type: application/json' \
-                -u "${API_KEY}:"
+                -u "${API_TOKEN}:"
             fi
       - run:
           name: Push upstream (doom-base)
@@ -91,7 +91,7 @@ jobs:
                 'https://circleci.com/api/v2/project/github/InnovAnon-Inc/doom-base/pipeline' \
                 --header 'Content-Type: application/json' \
                 --data '{"branch":"master"}' \
-                -u "${API_KEY}:"
+                -u "${API_TOKEN}:"
             fi
       - run:
           name: Push upstream (lfs-prechroot)
