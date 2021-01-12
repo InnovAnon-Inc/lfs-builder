@@ -83,6 +83,16 @@ jobs:
                 --header 'Content-Type: application/json' \
                 -u "${LOGO_BUILDER_API_KEY}:"
             fi
+      - run:
+          name: Push upstream (doom-base)
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              curl --location --request POST \
+                'https://circleci.com/api/v2/project/github/InnovAnon-Inc/doom-base/pipeline' \
+                --header 'Content-Type: application/json' \
+                -u "${DOOM_BASE_API_KEY}:"
+            fi
+
 
 
 
