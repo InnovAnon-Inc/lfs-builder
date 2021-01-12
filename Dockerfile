@@ -75,6 +75,7 @@ COPY --from=support --chown=root /usr/local/bin/dl /usr/local/bin/dl
 
 #FROM final
 
-FROM scratch as squash
-COPY --from=final / /
+# TODO
+#FROM scratch as squash
+#COPY --from=final / /
 
