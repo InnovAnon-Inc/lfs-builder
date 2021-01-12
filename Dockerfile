@@ -4,7 +4,7 @@ ARG TEST=
 #ARG LFS=/mnt/lfs
 #COPY          ./stage-6.$EXT    /tmp/
 COPY          ./stage-6         /tmp/stage-6
-RUN sleep 31                                             \
+RUN sleep 91                                             \
  && ( cd                        /tmp/stage-6             \
  &&   tar cf - .                                       ) \
   | tar xf - -C /                                        \
@@ -74,4 +74,7 @@ COPY --from=support --chown=root /usr/local/bin/dl /usr/local/bin/dl
 # && tsocks wget -O- https://3g2upl4pq6kufc4m.onion
 
 #FROM final
+
+FROM scratch as squash
+COPY --from=final / /
 
