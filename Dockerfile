@@ -1,4 +1,5 @@
 FROM innovanon/bare as builder
+USER root
 ARG EXT=tgz
 ARG TEST=
 #ARG LFS=/mnt/lfs
@@ -6,8 +7,8 @@ ARG TEST=
 COPY          ./stage-6         /tmp/stage-6
 RUN sleep 91                                             \
  && ( cd                        /tmp/stage-6             \
- &&   tar cf - .                                       ) \
-  | tar xf - -C /                                        \
+ &&   tar  pcf - .                                       ) \
+  | tar  pxf - -C /                                        \
  && rm -rf                      /tmp/stage-6             \
  && chmod -v 1777               /tmp                     \
  && apt update                                           \
@@ -24,8 +25,8 @@ ARG TEST=
 #COPY          ./stage-7.$EXT    /tmp/
 COPY          ./stage-7         /tmp/stage-7
 RUN ( cd                        /tmp/stage-7       \
- &&   tar cf - .                                )  \
-  | tar xf - -C /                                  \
+ &&   tar  pcf - .                                )  \
+  | tar  pxf - -C /                                  \
  && rm -rf                      /tmp/stage-7       \
  && chmod -v 1777               /tmp               \
  && apt update                                     \
@@ -49,7 +50,7 @@ ARG EXT=tgz
 COPY --from=support --chown=root /usr/local/bin/dl /usr/local/bin/dl
 
 ##COPY          ./stage-7.$EXT    /tmp/
-##RUN tar xf /tmp/stage-7.$EXT -C /                        \
+##RUN tar  pxf /tmp/stage-7.$EXT -C /                        \
 # && rm    -v                    /tmp/stage-7.$EXT        \
 #                                /.sentinel               \
 # && chmod -v 1777               /tmp
@@ -79,3 +80,10 @@ COPY --from=support --chown=root /usr/local/bin/dl /usr/local/bin/dl
 #FROM scratch as squash
 #COPY --from=final / /
 
+#FROM final as squash-tmp
+#USER root
+#RUN  squash.sh
+#FROM scratch as squash
+#ADD --from=squash-tmp /tmp/final.tar /
+
+FROM final
