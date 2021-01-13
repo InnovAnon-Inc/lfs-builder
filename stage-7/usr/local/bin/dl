@@ -44,7 +44,7 @@ unset k T
 #curl --proxy "$SOCKS_PROXY" "${URL[@]}"
 for url in "${URL[@]}" ; do
   [[ -n "$url" ]]
-  f="$(basename "$URL")"
+  f="$(basename "$url")"
   [[ -n "$f" ]]
   curl -L --proxy "$SOCKS_PROXY" -o "$f" "$url"
 done
