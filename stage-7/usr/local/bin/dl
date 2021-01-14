@@ -46,7 +46,7 @@ for url in "${URL[@]}" ; do
   [[ -n "$url" ]]
   f="$(basename "$url")"
   [[ -n "$f" ]]
-  curl --retry 3 -L --proxy "$SOCKS_PROXY" -o "$f" "$url"
+  curl --retry 10 -L --proxy "$SOCKS_PROXY" -o "$f" "$url"
 done
 unset f url
  
